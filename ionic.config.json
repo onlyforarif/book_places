@@ -1,0 +1,7 @@
+{
+  "name": "book_places",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
