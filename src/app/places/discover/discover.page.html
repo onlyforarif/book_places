@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-segment value="all" (ionChange)="onFilterUpdate($event)">
+    <ion-segment-button value="all"><ion-label>All Places</ion-label></ion-segment-button>
+    <ion-segment-button value="booked"><ion-label>Booked Places</ion-label></ion-segment-button>
+  </ion-segment>
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
@@ -29,15 +33,22 @@
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
         <ion-list>
-          <ion-item *ngFor="let place of loadedPlaces.slice(1)" [routerLink]="['/', 'places', 'tabs', 'discover', place.id]" detail>
-            <ion-thumbnail slot="start">
-              <ion-img [src]="place.imageUrl"></ion-img>
-            </ion-thumbnail>
-            <ion-label>
-              <h2>{{ place.title }}</h2>
-              <p>{{ place.description }}</p>
-            </ion-label>
-          </ion-item>
+          <ion-item-sliding *ngFor="let place of loadedPlaces.slice(1)">
+            <ion-item 
+              [routerLink]="['/', 'places', 'tabs', 'discover', place.id]" detail>
+              <ion-thumbnail slot="start">
+                <ion-img [src]="place.imageUrl"></ion-img>
+              </ion-thumbnail>
+              <ion-label>
+                <h2>{{ place.title }}</h2>
+                <p>{{ place.description }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item-options>
+              <ion-item-option color="secondary" (onclick)="onEdit(place.id)">
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
         </ion-list>
       </ion-col>
     </ion-row>

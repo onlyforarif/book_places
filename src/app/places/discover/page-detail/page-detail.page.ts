@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController } from '@ionic/angular';
+import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component';
 import { Place } from '../../place.model';
 import { PlacesService } from '../../places.service';
 
@@ -14,7 +15,9 @@ export class PageDetailPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private placesService: PlacesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalCtl: ModalController,
+    private activeSheetCtrl: ActionSheetController
   ) { }
 
   ngOnInit() {
@@ -27,7 +30,45 @@ export class PageDetailPage implements OnInit {
     });
   }
 
-  onBackButton() {
-    this.navCtrl.navigateBack('/places/tabs/discover');
+  onBookButton() {
+
+    this.activeSheetCtrl.create({
+      header: 'Choose an option',
+      buttons: [
+      {
+        text: 'Select Date',
+        handler: () => {
+          this.onBookingModal('select')
+        },
+      },
+      {
+        text: 'Random Date',
+        handler: () => {
+          this.onBookingModal('random')
+        },
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }]
+    }).then(actionSheetEl => {
+      actionSheetEl.present();
+    });
+  }
+
+  onBookingModal(model: 'select' | 'random'){
+    this.modalCtl.create({
+      component: CreateBookingComponent,
+      componentProps: {selectedPlace: this.place}
+    }).then(modalEl => {
+      modalEl.present();
+      return modalEl.onDidDismiss();
+    })
+    .then(resultData => {
+      console.log(resultData.data, resultData.role);
+      if(resultData.role === 'confirmed'){
+        console.log('CONFIRMED');
+      }
+    });
   }
 }

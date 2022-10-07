@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PageDetailPageRoutingModule } from './page-detail-routing.module';
 
 import { PageDetailPage } from './page-detail.page';
+import { CreateBookingComponent } from 'src/app/bookings/create-booking/create-booking.component';
 
 @NgModule({
   imports: [
@@ -16,5 +17,6 @@ import { PageDetailPage } from './page-detail.page';
     PageDetailPageRoutingModule
   ],
   declarations: [PageDetailPage]
+  // entryComponents: [CreateBookingComponent]
 })
 export class PageDetailPageModule {}
