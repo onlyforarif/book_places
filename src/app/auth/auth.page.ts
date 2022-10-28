@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 // import { setTimeout } from 'timers';
@@ -11,6 +12,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthPage implements OnInit {
   isLoading = false;
+  isLogin = true;
   constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
@@ -27,6 +29,21 @@ export class AuthPage implements OnInit {
         this.router.navigateByUrl('/places/tabs/discover');
       }, 1000);
     })
+  }
+
+  onSubmit(form: NgForm){
+    if(!form.valid){
+      return;
+    }
+    if(this.isLogin){
+      // Login logic
+    }else{
+      // Signup logic
+    }
+  }
+
+  onAuthSwitch(){
+    this.isLogin = !this.isLogin;
   }
 
 }
